@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QCloseEvent>
 #include "gdm_database.h"
+#include <QTextDocument>
+#include <QPrinter>
+#include <QFileDialog>
 
 namespace Ui {
 class collection_details;
@@ -26,6 +29,10 @@ public:
 private slots:
     void on_collection_details_destroyed();
 
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::collection_details *ui;

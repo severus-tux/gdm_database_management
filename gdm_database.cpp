@@ -26,12 +26,12 @@ void gdm_database::create_new_db()
                   "book_no varchar(5) , "
                   "amount integer , "
                   "timestamp varchar(30) , "
-                  "foreign key(id) references members(member_id) " );
+                  "foreign key(id) references members(member_id) )" );
     query.exec();
 
     query.prepare("CREATE TABLE variable_values ("
                   "variable varchar(25) primary key, "
-                  "value varchar(50)");
+                  "value varchar(50) )");
     query.exec();
     query.clear();
     connClose();

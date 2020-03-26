@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+//    create_new_database();
     //qDebug() << "Start of all\n";
 //    max_doner_id = 0;
 //    max_member_id = 0;
@@ -16,7 +17,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_5_clicked()
+void MainWindow::create_new_database()
 {
     new_db = new gdm_database();
     new_db->create_new_db();

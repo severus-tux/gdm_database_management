@@ -85,7 +85,8 @@ void edit_member_details::on_pushButton_clicked()
     area = ui->lineEdit_area->text();
     mobile = ui->lineEdit_mobile->text();
     address = ui->textEdit_address->toPlainText();
-
+    address.remove("\'");
+    address.remove("\"");
     if(mbr_id == "[select a member]")
     {
         QMessageBox::critical(this,tr("error::"),"Please click 'Search' and select a member ID ");
@@ -116,4 +117,9 @@ void edit_member_details::on_pushButton_clicked()
 void edit_member_details::on_pushButton_2_clicked()
 {
     close();
+}
+
+void edit_member_details::on_tableView_clicked(const QModelIndex &index)
+{
+    on_tableView_activated(index);
 }

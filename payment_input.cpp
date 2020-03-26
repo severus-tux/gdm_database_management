@@ -25,7 +25,7 @@ void payment_input::on_pushButton_clicked()
     db->connOpen();
 
     id     = ui->lineEdit->text();
-    date   = ui->calendarWidget->selectedDate().toString("yyyy-MM-dd");
+    date   = ui->calendarWidget->selectedDate().toString("dd-MM-yyyy");
     rcpt_no= ui->lineEdit_2->text();
     book_no= ui->lineEdit_3->text();
     amount = ui->lineEdit_4->text();
@@ -106,4 +106,21 @@ void payment_input::on_tableView_activated(const QModelIndex &index)
     int rowidx = ui->tableView->selectionModel()->currentIndex().row();
     QString id = ui->tableView->model()->index(rowidx , 0).data().toString();
     ui->lineEdit->setText(id);
+}
+
+void payment_input::on_calendarWidget_activated(const QDate &date)
+{
+    QString sel_date = date.toString(Qt::TextDate);
+    ui->selected_date->setText(sel_date);
+}
+
+void payment_input::on_calendarWidget_clicked(const QDate &date)
+{
+    QString sel_date = date.toString(Qt::TextDate);
+    ui->selected_date->setText(sel_date);
+}
+
+void payment_input::on_tableView_clicked(const QModelIndex &index)
+{
+    on_tableView_activated(index);
 }

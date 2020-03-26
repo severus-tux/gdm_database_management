@@ -14,7 +14,7 @@
    <string>GDM Database Management System</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -253,7 +253,7 @@
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
-         <string>Edit Payment</string>
+         <string>Edit / Delete Payment</string>
         </property>
        </widget>
       </item>
@@ -313,7 +313,7 @@
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
-         <string>Member View Details</string>
+         <string>View  Member Details</string>
         </property>
        </widget>
       </item>
@@ -374,13 +374,6 @@
         </property>
         <property name="text">
          <string>View Collection Details</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_5">
-        <property name="text">
-         <string>Create DB</string>
         </property>
        </widget>
       </item>

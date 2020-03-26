@@ -36,6 +36,16 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_calendarWidget_activated(const QDate &date);
+
+    void on_calendarWidget_clicked(const QDate &date);
+
+    void on_tableView_clicked(const QModelIndex &index);
+
+    void on_tableView_2_clicked(const QModelIndex &index);
+
+    void on_pushButton_4_clicked();
+
 private:
     Ui::edit_payment *ui;
     gdm_database *db;

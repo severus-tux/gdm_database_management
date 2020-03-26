@@ -23,7 +23,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_5_clicked();
+
+    void create_new_database();
 
     void on_pushButton_clicked();
 

@@ -33,6 +33,8 @@ void member_details_input::on_pushButton_clicked()
     area = ui->lineEdit_area->text();
     mobile = ui->lineEdit_mobile->text();
     address = ui->textEdit_address->toPlainText();
+    address.remove("\'");
+    address.remove("\"");
     if ( ui->radioButton_mbr->isChecked() )
         mbr="TRUE";
     else if (ui->radioButton_dnr->isChecked())

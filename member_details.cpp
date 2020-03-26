@@ -120,11 +120,6 @@ void member_details::on_pushButton_2_clicked()
     close();
 }
 
-//void member_details::on_tableView_clicked(const QModelIndex &index)
-//{
-//    QString selected_str = ui->tableView->model()->index(index.row(),0).data().toString();
-//    qDebug() << selected_str;
-//}
 
 void member_details::on_tableView_activated(const QModelIndex &index)
 {
@@ -205,4 +200,112 @@ void member_details::on_tableView_activated(const QModelIndex &index)
 
     //qDebug()<< "";
     db->connClose();
+}
+
+void member_details::on_pushButton_3_clicked()
+{
+    if(ui->lineEdit->text().isEmpty())
+    {
+        QMessageBox::critical(this,tr("error::"),"Please select a member to Print");
+    }
+    else
+    {
+
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                   "./"+ui->lineEdit->text()+"_details.pdf",
+                                   tr("PDF Document (*.pdf)"));
+        qDebug() << fileName;
+
+
+        QString strStream,strTitle;
+        QTextStream out(&strStream);
+
+        const int rowCount = ui->tableView_2->model()->rowCount();
+        const int columnCount = ui->tableView_2->model()->columnCount();
+
+        strTitle = "Member Details";
+
+        out <<  "<html>\n"
+                "<head>\n"
+                "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+            <<  QString("<title>%1</title>\n").arg(strTitle)
+            <<  "</head>\n"
+                "<body bgcolor=#ffffff link=#5000A0>\n"
+                "<center><h3>Member Details</h3></center><br>"
+                "<table>"
+                "  <tr>"
+                "    <td><b>Member ID</b></td>"
+                "    <td>:</td>"
+                "    <td>"+ui->lineEdit->text()+"</td>"
+                "  </tr>"
+                "  <tr>"
+                "    <td><b>Name</b></td>"
+                "    <td>:</td>"
+                "    <td>"+ui->name->text()+"</td>"
+                "  </tr>"
+                "  <tr>"
+                "    <td><b>Mobile Number</b></td>"
+                "    <td>:</td>"
+                "    <td>"+ui->mobil_no->text()+"</td>"
+                "  </tr>"
+                "  <tr>"
+                "    <td><b>Membership Status</b></td>"
+                "    <td>:</td>"
+                "    <td>"+ui->member_status->text()+"</td>"
+                "  </tr>"
+                "  <tr>"
+                "    <td><b>Area</b></td>"
+                "    <td>:</td>"
+                "    <td>"+ui->area->text()+"</td>"
+                "  </tr>"
+                "  <tr>"
+                "    <td><b>Address</b></td>"
+                "    <td>:</td>"
+                "    <td>"+ui->textBrowser_address->toHtml()+"</td>"
+                "  </tr>"
+                "  <tr>"
+                "    <td><b>Total amount paid</b></td>"
+                "    <td>:</td>"
+                "    <td>"+ui->amount->text()+"</td>"
+                "  </tr>"
+                "</table>"
+                "<h4>Donation details : </h4>"
+                "<table border=3  bordercolor='BLACK' cellspacing=2   cellpadding=5 >\n";
+
+        // headers
+        out << "<thead><tr bgcolor=#f0f0f0>";
+        for (int column = 0; column < columnCount; column++)
+            if (!ui->tableView_2->isColumnHidden(column))
+                out << QString("<th width='25%'>%1</th>").arg(ui->tableView_2->model()->headerData(column, Qt::Horizontal).toString());
+        out << "</tr></thead>\n";
+
+        // data table
+        for (int row = 0; row < rowCount; row++) {
+            out << "<tr>";
+            for (int column = 0; column < columnCount; column++) {
+                if (!ui->tableView_2->isColumnHidden(column)) {
+                    QString data = ui->tableView_2->model()->data(ui->tableView_2->model()->index(row, column)).toString().simplified();
+                    out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                }
+            }
+            out << "</tr>\n";
+        }
+        out <<  "</table>\n"
+            "</body>\n"
+            "</html>\n";
+
+        QTextDocument doc;
+        doc.setHtml(strStream);
+        //qDebug() << "****\n"+strStream+"\n****0";
+        QPrinter printer(QPrinter::HighResolution);
+        printer.setOutputFileName(fileName);
+        printer.setOutputFormat(QPrinter::PdfFormat);
+        doc.print(&printer);
+        printer.newPage();
+    }
+}
+
+void member_details::on_tableView_clicked(const QModelIndex &index)
+{
+    on_tableView_activated(index);
 }

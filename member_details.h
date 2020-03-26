@@ -5,6 +5,10 @@
 #include <QCloseEvent>
 #include "gdm_database.h"
 #include <QSqlQueryModel>
+#include <QTextDocument>
+#include <QPrinter>
+#include <QFileDialog>
+
 
 namespace Ui {
 class member_details;
@@ -36,6 +40,10 @@ private slots:
 
     void on_tableView_activated(const QModelIndex &index);
 
+
+    void on_pushButton_3_clicked();
+
+    void on_tableView_clicked(const QModelIndex &index);
 
 private:
     Ui::member_details *ui;

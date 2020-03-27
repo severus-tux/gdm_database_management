@@ -1,6 +1,6 @@
 #include <windows.h>
 
-IDI_ICON1	ICON	DISCARDABLE	"/home/vishwa/Projects/gdm_database_management/GDM.ico"
+IDI_ICON1	ICON	DISCARDABLE	"/home/vishwa/GDM/gdm_database_management/GDM.ico"
 
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 0,0,0,0

@@ -8,6 +8,7 @@ to Build:
 cd Project/gdm_database_management
 
 i686-w64-mingw32.static-qmake-qt5
+make clean
 make
 
 

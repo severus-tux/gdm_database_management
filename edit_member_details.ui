@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>922</width>
+    <width>906</width>
     <height>377</height>
    </rect>
   </property>
@@ -921,6 +921,9 @@
               </disabled>
              </palette>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Update</string>
             </property>
@@ -964,6 +967,9 @@
                </colorrole>
               </disabled>
              </palette>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="text">
              <string>Cancel</string>

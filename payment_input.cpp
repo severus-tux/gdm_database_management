@@ -19,8 +19,8 @@ void payment_input::on_pushButton_clicked()
 {
     //qDebug() << "hi";
     //int error=0;
-    int count=0;
-    QString id,date,rcpt_no,book_no,amount,pre_qry,timestamp;
+    int count=0,error=0;
+    QString id,date,rcpt_no,book_no,amount,pre_qry,timestamp,payment_mode,payment_info;
     db = new gdm_database();
     db->connOpen();
 
@@ -30,6 +30,13 @@ void payment_input::on_pushButton_clicked()
     book_no= ui->lineEdit_3->text();
     amount = ui->lineEdit_4->text();
     timestamp = QString::number(QDateTime::currentSecsSinceEpoch(),10);
+    if(ui->radioButton_cash->isChecked())
+        payment_mode="Cash";
+    else if(ui->radioButton_noncash->isChecked())
+        payment_mode="Non Cash";
+    else
+        error=1;
+    payment_info = ui->lineEdit_payment_info->text();
 
     if(db->db.isOpen())
     {
@@ -47,7 +54,7 @@ void payment_input::on_pushButton_clicked()
            qry.clear();
     }
 
-    if(id.isEmpty() || date.isEmpty() || rcpt_no.isEmpty() || book_no.isEmpty() || amount.isEmpty())
+    if(id.isEmpty() || date.isEmpty() || rcpt_no.isEmpty() || book_no.isEmpty() || amount.isEmpty()  || error==1)
     {
         QMessageBox::critical(this,tr("missing information"),tr("You have missed some information!\nPlease check again."));
         qDebug() << "Missing information!!!";
@@ -55,7 +62,7 @@ void payment_input::on_pushButton_clicked()
 
     else
     {
-        pre_qry = "INSERT INTO payments VALUES ( '"+id+"' , '"+date+"' , '"+rcpt_no+"' , '"+book_no+"' , '"+amount+"' , '"+timestamp+"' ) ";
+        pre_qry = "INSERT INTO payments VALUES ( '"+id+"' , '"+date+"' , '"+rcpt_no+"' , '"+book_no+"' , '"+amount+"' , '"+payment_mode+"', '"+payment_info+"', '"+timestamp+"' ) ";
         db->exec_qry(pre_qry);
 //        {
 //            QMessageBox::critical(this,tr("error::"),qry.lastError().text());

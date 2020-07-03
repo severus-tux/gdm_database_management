@@ -25,6 +25,8 @@ void gdm_database::create_new_db()
                   "rcpt_no varchar(10) , "
                   "book_no varchar(5) , "
                   "amount integer , "
+                  "payment_mode varchar(20), "
+                  "payment_info varchar(100), "
                   "timestamp varchar(30) , "
                   "foreign key(id) references members(member_id) )" );
     query.exec();

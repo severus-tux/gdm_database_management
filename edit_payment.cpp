@@ -12,7 +12,7 @@ edit_payment::edit_payment(QWidget *parent) :
     db->connOpen();
     QSqlQueryModel *modal = new QSqlQueryModel();
     QSqlQuery qry;
-    QString pre_qry = "SELECT timestamp as PAYMENT_ID,id as member_id,date,rcpt_no,book_no,amount from payments ORDER BY PAYMENT_ID DESC";
+    QString pre_qry = "SELECT timestamp as PAYMENT_ID,id as member_id,date,rcpt_no,book_no,payment_mode,payment_info,amount from payments ORDER BY PAYMENT_ID DESC";
     qry.prepare(pre_qry);
     qry.exec();
     ui->tableView->setWordWrap(true);
@@ -38,6 +38,7 @@ edit_payment::~edit_payment()
 void edit_payment::on_tableView_activated(const QModelIndex &index)
 {
     QString pymt_id = ui->tableView->model()->data(index).toString();
+    QString payment_mode;
     //ui->label_payment_id->setText(pymt_id);
 
     int rowidx = ui->tableView->selectionModel()->currentIndex().row();
@@ -45,9 +46,21 @@ void edit_payment::on_tableView_activated(const QModelIndex &index)
     ui->label_mbr_id->setText(ui->tableView->model()->index(rowidx , 1).data().toString());
     ui->lineEdit_book_no->setText(ui->tableView->model()->index(rowidx , 4).data().toString());
     ui->lineEdit_rcpt_no->setText(ui->tableView->model()->index(rowidx , 3).data().toString());
-    ui->lineEdit_amount->setText(ui->tableView->model()->index(rowidx , 5).data().toString());
+    ui->lineEdit_amount->setText(ui->tableView->model()->index(rowidx , 7).data().toString());
     QString date= ui->tableView->model()->index(rowidx , 2).data().toString();
     ui->calendarWidget->setSelectedDate(QDate::fromString(date,"dd-MM-yyyy"));
+    ui->lineEdit_payment_info->setText(ui->tableView->model()->index(rowidx , 6).data().toString());
+    payment_mode = ui->tableView->model()->index(rowidx, 5).data().toString();
+    if (payment_mode=="Cash")
+    {
+        ui->radioButton_cash->setChecked(true);
+        ui->radioButton_noncash->setChecked(false);
+    }
+    else
+    {
+        ui->radioButton_cash->setChecked(false);
+        ui->radioButton_noncash->setChecked(true);
+    }
 //    ui->txt2->setText(model->index(rowidx , 1).data().toString());
 //    ui->txt3->setText(model->index(rowidx , 2).data().toString());
 //    ui->txt4->setText(model->index(rowidx , 3).data().toString());
@@ -95,13 +108,26 @@ void edit_payment::on_pushButton_2_clicked()
     db = new gdm_database();
     db->connOpen();
     QSqlQuery qry;
-    QString mbr_id,date,rcpt_no,book_no,amount,timestamp;
+    QString mbr_id,date,rcpt_no,book_no,amount,timestamp,payment_info,payment_mode;
     timestamp = ui->label_payment_id->text();
     mbr_id = ui->label_mbr_id->text();
     rcpt_no = ui->lineEdit_rcpt_no->text();
     book_no = ui->lineEdit_book_no->text();
     amount = ui->lineEdit_amount->text();
     date   = ui->calendarWidget->selectedDate().toString("dd-MM-yyyy");
+    payment_info = ui->lineEdit_payment_info->text();
+    if(ui->radioButton_cash->isChecked())
+    {
+        payment_mode="Cash";
+    }
+    else if(ui->radioButton_noncash->isChecked())
+    {
+        payment_mode="Non Cash";
+    }
+    else
+    {
+        QMessageBox::critical(this,tr("missing information"),tr("Please select a payment mode"));
+    }
 
     if(timestamp.isEmpty())
     {
@@ -110,7 +136,7 @@ void edit_payment::on_pushButton_2_clicked()
 
     else
     {
-        QString pre_qry = "UPDATE payments SET id='"+mbr_id+"' , date='"+date+"' , rcpt_no='"+rcpt_no+"' , book_no='"+book_no+"' , amount='"+amount+"' WHERE timestamp='"+timestamp+"' ";
+        QString pre_qry = "UPDATE payments SET id='"+mbr_id+"' , date='"+date+"' , rcpt_no='"+rcpt_no+"' , book_no='"+book_no+"' , payment_mode='"+payment_mode+"' , payment_info='"+payment_info+"' , amount='"+amount+"' WHERE timestamp='"+timestamp+"' ";
         qDebug() << pre_qry;
         db->exec_qry(pre_qry);
     }

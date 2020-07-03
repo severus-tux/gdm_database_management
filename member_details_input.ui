@@ -1033,6 +1033,9 @@
             </disabled>
            </palette>
           </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
           <property name="text">
            <string>Register</string>
           </property>
@@ -1076,6 +1079,9 @@
              </colorrole>
             </disabled>
            </palette>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
           </property>
           <property name="text">
            <string>Cancel</string>

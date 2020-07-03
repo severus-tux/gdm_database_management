@@ -172,7 +172,7 @@ void member_details::on_tableView_activated(const QModelIndex &index)
     }
     //Setting Table
     QSqlQueryModel *modal = new QSqlQueryModel();
-    QString pre_qry = "SELECT date,book_no,rcpt_no,amount from payments WHERE id = UPPER('"+id+"')";
+    QString pre_qry = "SELECT date,book_no,rcpt_no,payment_mode,payment_info,amount from payments WHERE id = UPPER('"+id+"')";
     qry.prepare(pre_qry);
     qry.exec();
     ui->tableView_2->setWordWrap(true);
